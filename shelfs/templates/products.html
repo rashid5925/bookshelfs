@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+    {% extends "base.html" %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}
+        Products
+      {% endblock %}</title>
+    
+</head>
+
+<body>
+    
+    {% block content %}
+    {% load static %}
+
+    <div class="container-fluid text-center">
+        <div class="row row-1 pt-5">
+            <div class="col-lg-5 offset-lg-1">
+                <p class="fs-2 text-black text-md-start">Take a Look</p>
+            </div>
+            <div class="col-lg-3 offset-lg-3 pt-3">
+            </div>
+            <hr class="hr-1 mx-auto border-2">
+        </div>
+        <div class="row row-2 justify-content-center gap-3">
+            {% for book in books %}
+        
+        <div class="col-lg-3 col-md-4">
+          <div class="col d-flex justify-content-center">
+            <div class="card" style="width: 18rem">
+              <img style="height:350px; !important"
+                src="/media/{{ book.image }}"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6 text-start">
+                    <a class="text-decoration-none fs-5" href="/media/{{ book.file }}" target="_blank"
+                      >{{ book.title }}</a
+                    >
+                  </div>
+                  <div class="col-6 text-end">
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'addToFvrt' %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="title" value="{{ book.title }}" style="display: none" />
+                            <input type="text" name="username" value="{{ user.username }}" style="display: none" />
+                            <button type="submit" style="background-color: white; !important; border: none; !important"><i class="fa fa-diamond" style="font-size: 18px"></i></button>
+                        </form>
+                    {% endif %}
+                  </div>
+                </div>
+                <p class="card-text text-start">{{ book.author }}</p>
+                <form action="{% url 'rate' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="title" value="{{ book.title }}" style="display: none" />
+                    <input
+                    class="rating"
+                    max="5"
+                    oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
+                    step="0.5"
+                    style="--value: {{ book.rating }}"
+                    type="range"
+                    name="rating"
+                    value="{{ book.rating }}"
+                    {% if user.is_authenticated != True %}
+                        disabled
+                    {% endif %}
+                    required
+                    />
+                    {% if user.is_authenticated %}
+                    <input type="submit" class="form-control btn" style="background-color: #c7a17a; !important" id="send"
+                        value="Rate">
+                    {% endif %}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+        <div class="col-lg-3 col-md-4">
+        </div>
+        </div>
+        <div class="row row-2 justify-content-center gap-3">
+        {% endif %}
+        {% endfor %}
+        </div>
+        
+    </div>
+
+
+
+    {% endblock %}
+</body>
+
+</html>

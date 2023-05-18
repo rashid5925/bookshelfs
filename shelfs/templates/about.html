@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    {% extends 'base.html' %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}
+        About
+      {% endblock %}</title>
+    
+</head>
+
+<body>
+
+    
+    {% block content %}
+    {% load static %}
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center gap-3">
+            <div class="col-lg-9">
+                <h1>About Book Shelfs</h1>
+            </div>
+        </div>
+        <hr class="mx-auto border-2 bg-black hr-2">
+        <div class="row justify-content-center">
+            <div class="col-md-5 offset-md-1">
+                <h5 class="text-primary">Looking for the best recommended books to read?</h5>
+                <p>Bookshelfs is an online reading website any one can read the books that we add, feel free to register
+                    and be one of our family.</p>
+                <p>We are a group majoring in Cyber security, we made this website as a final project for cs314 course.
+                </p>
+                <ul class="b">
+                    <li>learn about our added books</li>
+                    <li>If you have any considerations or suggestions contact us</li>
+                    <li>Login or register</li>
+                </ul>
+                <button type="button" class="btn btn-danger">Read More About Us</button>
+            </div>
+            <div class="col-md-5">
+                <img src="{% static 'images/about-img.jpeg' %}" width="80%" class="img-fluid" alt="Books Image">
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+</body>
+
+</html>
